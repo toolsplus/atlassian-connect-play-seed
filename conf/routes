@@ -1,0 +1,15 @@
+# AC routes
+GET        /                              controllers.AddonDescriptorController.redirectToDescriptor
+GET        /atlassian-connect.json        controllers.AddonDescriptorController.descriptor
+
+# Pages
+GET        /welcome                       controllers.AddonIFrameController.iframe(title = "Welcome", entry = "welcome")
+
+# API
+GET        /hello/message                 controllers.ApiController.helloMessage
+
+# Assets
+GET        /assets/*file                  controllers.Assets.at(path = "/public", file)
+
+# atlassian-connect-play-scala
+->         /                              atlassian.connect.Routes

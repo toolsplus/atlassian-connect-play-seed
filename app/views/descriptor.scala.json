@@ -1,0 +1,50 @@
+@import io.toolsplus.atlassian.connect.play.api.models.Predefined.AddonKey
+@(addonKey: AddonKey, addonName: String, addonBaseUrl: String)
+{
+  "key": "@addonKey",
+  "name": "@addonName",
+  "description": "Atlassian Connect Play Seed",
+  "apiVersion": 1,
+  "enableLicensing": true,
+  "vendor": {
+    "name": "ToolsPlus",
+    "url": "http://www.toolsplus.ch"
+  },
+  "baseUrl": "@addonBaseUrl",
+  "links": {
+    "self": "@addonBaseUrl/atlassian-connect.json"
+  },
+  "authentication": {
+    "type": "jwt"
+  },
+  "lifecycle": {
+    "installed": "/installed",
+    "uninstalled": "/uninstalled"
+  },
+  "scopes": [
+    "READ",
+    "WRITE"
+  ],
+  "modules": {
+    "webSections": [
+      {
+        "key": "seed-section-menu-plugins-admin",
+        "location": "admin_plugins_menu",
+        "weight": 10,
+        "name": {
+          "value": "AC Play Seed"
+        }
+      }
+    ],
+    "adminPages": [
+      {
+        "key": "welcome-page",
+        "url": "/welcome",
+        "location": "admin_plugins_menu/seed-section-menu-plugins-admin",
+        "name": {
+          "value": "Welcome"
+        }
+      }
+    ]
+  }
+}
