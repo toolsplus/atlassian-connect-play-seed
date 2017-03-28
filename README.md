@@ -10,29 +10,51 @@ based on [Atlassian Connect Play](atlassian-connect-play).
 
 ## Quick start
 
-Start by cloning this repository
- 
- 
-### ngrok
-To install a Atlassian Connect add-on on a Cloud instance it has to be served 
-over HTTPS. This can easily be done using [ngrok](ngrok). Make sure you have it
-installed and a tunnel started using
-       
-       ngrok http 9000
-       
-ngrok will display the base URL for your add-on. Use it to configure the `AC_BASE_URL`
-parameter in the [run configuration](#run-configuration).
+1. Start by cloning this repository 
+1. Install ngrok
 
-### Database
+    To install a Atlassian Connect add-on on a Cloud instance it has to be served 
+    over HTTPS. This can easily be done using [ngrok](ngrok). Make sure you have it
+    installed and a tunnel started using
+           
+           ngrok http 9000
+           
+    ngrok will display the base URL for your add-on. Use it to configure the `AC_BASE_URL`
+    parameter in the [run configuration](#run-configuration).
 
-This project is configured to use Postgres backend storage via 
-[Atlassian Connect Play Slick](atlassian-connect-play-slick). Follow the guide
-there on how to configure a different database system if you wish to use something
-else.
+1. Configure the Play application
 
-### Run configuration
+    You can configure your Play application via `conf/application.conf`.
+    Atlassian Connect Play provides the following configuration parameters:
+    
+        atlassian.connect {
+          key = io.toolsplus.acplayscala
+          name = "Atlassian Connect Play"
+          baseUrl = "localhost:9000"
+          allowReinstallMissingHost = true
+        }
+        
+    `atlassian.connect.key` is your add-on's unique key
+    `atlassian.connect.name` is your add-on's name that you can choose freely
+    `atlassian.connect.baseUrl` is your ngrok HTTPS URL if you develop locally, 
+    otherwise the HTTPS URL of where your add-on lives
+    `atlassian.connect.allowReinstallMissingHost` when set to true will not allow
+    to re-install a missing host, should be set to false for developer purposes
+    
+1. Configure a database
 
-To start the add-on you will need to configure a few parameters.
+    This project is configured to use Postgres backend storage via 
+    [Atlassian Connect Play Slick](atlassian-connect-play-slick). Follow the guide
+    there on how to configure a different database system if you wish to use something
+    else.
+    
+That's it. You're add-on should now be ready to go.
+
+## Configuration via environment variables
+
+Alternatively to configuring your add-on via `conf/application.conf` you can configure
+some properties via environment variables. The following lists the parameters
+available by default:
 
     AC_BASE_URL=https://my-host.ngrok.io
     AC_ALLOW_REINSTALL_MISSING_HOST=true
@@ -41,6 +63,10 @@ To start the add-on you will need to configure a few parameters.
     SLICK_DBS_DEFAULT_DB_DRIVER=org.postgresql.Driver
     SLICK_DBS_DEFAULT_DB_USER=sa
     SLICK_DBS_DEFAULT_DB_PASSWORD=
+    
+If you need other parameters exposed as environment variables you can easily add
+then to the `conf/application.conf`. See examples in `conf/application.conf` on 
+how to do this.
 
 
 ## Contributing
