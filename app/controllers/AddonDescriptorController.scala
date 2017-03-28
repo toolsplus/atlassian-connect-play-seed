@@ -15,7 +15,7 @@ class AddonDescriptorController @Inject()(addonProperties: AddonProperties)
     Ok(
       views.json.descriptor(addonProperties.key,
                             addonProperties.name,
-                            addonProperties.baseUrl))
+                            addonProperties.baseUrl)).as(JSON)
   }
 
   /** Redirects request to the add-on descriptor.
