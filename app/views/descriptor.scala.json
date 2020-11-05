@@ -1,5 +1,5 @@
-@import io.toolsplus.atlassian.connect.play.api.models.Predefined.AddonKey
-@(addonKey: AddonKey, addonName: String, addonBaseUrl: String)
+@import io.toolsplus.atlassian.connect.play.api.models.Predefined.AppKey
+@(addonKey: AppKey, addonName: String, addonBaseUrl: String)
 {
   "key": "@addonKey",
   "name": "@addonName",

@@ -1,9 +1,11 @@
+import scala.sys.process.Process
+
 val commonSettings = Seq(
   organization := "io.toolsplus",
   scalaVersion := "2.13.2",
   resolvers ++= Seq(
-    "Typesafe repository releases" at "http://repo.typesafe.com/typesafe/releases/",
-    "Bintary JCenter" at "http://jcenter.bintray.com"
+    "Typesafe repository releases" at "https://repo.typesafe.com/typesafe/releases/",
+    "Bintary JCenter" at "https://jcenter.bintray.com"
   )
 )
 
@@ -26,8 +28,8 @@ lazy val jsSettings = Seq(
     Process("npm install", baseDirectory.value).!
     Process("node_modules/.bin/webpack", baseDirectory.value).!
   },
-  PlayKeys.playRunHooks <+= baseDirectory.map(base => Webpack(base)),
-  compile <<= (compile in Compile) dependsOn transpileJs
+  PlayKeys.playRunHooks += baseDirectory.map(Webpack.apply).value,
+  compile := ((compile in Compile) dependsOn transpileJs).value
 )
 
 lazy val `atlassian-connect-play-seed` = project
