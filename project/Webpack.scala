@@ -1,7 +1,6 @@
-import java.net.InetSocketAddress
-
 import play.sbt.PlayRunHook
 import sbt._
+import scala.sys.process.Process
 
 object Webpack {
   def apply(base: File): PlayRunHook = {
@@ -14,7 +13,7 @@ object Webpack {
         Process("npm install").!
       }
 
-      override def afterStarted(addr: InetSocketAddress): Unit = {
+      override def afterStarted(): Unit = {
         process = Some(Process("./node_modules/.bin/webpack --progress -d --watch", base).run)
       }
 

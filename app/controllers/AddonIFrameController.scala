@@ -1,40 +1,24 @@
 package controllers
 
 import com.google.inject.Inject
-import io.toolsplus.atlassian.connect.play.actions.JwtAuthenticationActions
-import io.toolsplus.atlassian.connect.play.auth.jwt.request.SelfAuthenticationTokenGenerator
-import play.api.Logger
-import play.api.mvc.Controller
-
-import scala.concurrent.Future
+import io.toolsplus.atlassian.connect.play.actions.AtlassianHostUserAction
+import play.api.mvc.InjectedController
 
 class AddonIFrameController @Inject()(
-    jwtAuthenticationActions: JwtAuthenticationActions,
-    selfAuthenticationTokenGenerator: SelfAuthenticationTokenGenerator)
-    extends Controller {
+                                       atlassianHostUserAction: AtlassianHostUserAction)
+    extends InjectedController {
 
-  private val logger = Logger(classOf[AddonIFrameController])
-
-  import jwtAuthenticationActions.Implicits._
-
-  /** Renders a page bootstrapping a client-side app.
-    *
-    * @param title Page title.
-    * @param entry Entry point of the application.
-    * @return Rendered page with all assets included.
-    */
-  def iframe(title: String, entry: String) =
-    jwtAuthenticationActions.withAtlassianHostUser.async { implicit request =>
-      selfAuthenticationTokenGenerator.createSelfAuthenticationToken(
-        request.hostUser) match {
-        case Right(token) =>
-          Future.successful(Ok(views.html.iframe(title, entry, token)))
-        case Left(error) => {
-          logger.error(s"Failed to sign JWT: ${error.getMessage}")
-          Future.successful(InternalServerError(error.getMessage))
-        }
-      }
-
+  /** Renders a standard iframe with JWT verification.
+   *
+   * @param title Page title.
+   * @param entry Entry point of the application.
+   * @param dataOptions Optional data options to add to the iframe
+   * @return Rendered iframe with all assets included.
+   */
+  def iframe(title: String, entry: String, dataOptions: Seq[String] = Seq.empty) =
+    atlassianHostUserAction { implicit request =>
+      Ok(views.html.iframe(title, entry, dataOptions :+ "margin:false",
+        request.hostUser.host.key))
     }
 
 }

@@ -1,11 +1,11 @@
 package controllers
 
 import com.google.inject.Inject
-import io.toolsplus.atlassian.connect.play.models.AddonProperties
-import play.api.mvc.{Action, Controller}
+import io.toolsplus.atlassian.connect.play.api.models.AppProperties
+import play.api.mvc.InjectedController
 
-class AddonDescriptorController @Inject()(addonProperties: AddonProperties)
-    extends Controller {
+class AddonDescriptorController @Inject()(addonProperties: AppProperties)
+    extends InjectedController {
 
   /** Renders the JSON descriptor.
     *

@@ -1,7 +1,7 @@
 Atlassian Connect Play Seed
 ===========================
 
-[![Build Status](https://travis-ci.org/toolsplus/atlassian-connect-play-seed.svg?branch=master)](https://travis-ci.org/toolsplus/atlassian-connect-play-seed)
+[![Build Status](https://github.com/toolsplus/atlassian-connect-play-seed/workflows/CI/badge.svg)](https://github.com/toolsplus/atlassian-connect-play-seed/actions)
 [![codecov](https://codecov.io/gh/toolsplus/atlassian-connect-play-seed/branch/master/graph/badge.svg)](https://codecov.io/gh/toolsplus/atlassian-connect-play-seed)
 
 
